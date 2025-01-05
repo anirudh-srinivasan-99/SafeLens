@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 
-class FaceDetector:
+class FaceExtractor:
     def __init__(self, config_path):
         self.model_arch_path = r'app\models\face_extraction\deploy.prototxt'
         self.model_weights_path = r'app\models\face_extraction\weights.caffemodel'
@@ -97,7 +97,7 @@ class FaceDetector:
 
 if __name__ == '__main__':
     image = cv2.imread(r'app\test_images\porn_189.jpg')
-    face_detector_obj = FaceDetector('')
-    face = face_detector_obj.extract_faces(image)
+    face_extractor_obj = FaceExtractor('')
+    face = face_extractor_obj.extract_faces(image)
     cv2.imshow("face", face)
     cv2.waitKey(0)
