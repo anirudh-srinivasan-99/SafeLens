@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "safelens"
+version = "0.1.0"
+description = "SafeLens is an AI-powered app that verifies the authenticity of images, detecting whether they are real or artificially generated. It also scans for explicit content, ensuring a safe and secure visual experience."
+authors = ["anirudh-srinivasan-99 <anirudhbadri99@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.8.10"
+flask = "3.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
