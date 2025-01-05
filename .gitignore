@@ -174,3 +174,4 @@ cython_debug/
 *.prototxt
 *.caffemodel
 *.h5
+*.png
