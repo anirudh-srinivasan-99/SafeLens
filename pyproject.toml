@@ -11,6 +11,9 @@ flask = "3.0.0"
 configparser = "^7.1.0"
 keras = "2.13.1"
 opencv-python = "4.8.1.78"
+tensorflow-io-gcs-filesystem = "0.31.0"
+tensorflow = "2.13.0"
+tensorflow-intel = "2.13.0"
 
 
 [build-system]
