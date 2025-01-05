@@ -1,18 +1,40 @@
-import os
+"""
+This file is responsible for extracting faces from input images using a pre-trained Caffe model.
+It detects faces with confidence greater than 0.5 and returns the cropped face, or the original image if no face is detected.
+"""
 
+import os
 import cv2
 import numpy as np
 
 
 class FaceExtractor:
-    def __init__(self, config_path):
+    """
+    This class is responsible for extracting faces from input images using a pre-trained face detection model.
+
+    Attributes:
+        model_arch_path (str): Path to the model architecture file (deploy.prototxt).
+        model_weights_path (str): Path to the model weights file (weights.caffemodel).
+        model (cv2.dnn.Net): The OpenCV DNN model used for face detection.
+    """
+
+    def __init__(self, config_path: str):
+        """
+        Initializes the `FaceExtractor` by loading the model architecture and weights.
+
+        :param config_path: Path to the configuration file (currently not used).
+        """
         self.model_arch_path = r'app\models\face_extraction\deploy.prototxt'
         self.model_weights_path = r'app\models\face_extraction\weights.caffemodel'
         self.model = None
         self._load_model()
 
+    def _load_model(self) -> None:
+        """
+        Loads the face detection model from the specified architecture and weights files.
 
-    def _load_model(self):
+        :raises FileNotFoundError: If either the model architecture or weights file is not found.
+        """
         if not os.path.exists(self.model_arch_path):
             raise FileNotFoundError(
                 f'Model architecture for face extractor is not found at {self.model_arch_path}.'
@@ -22,7 +44,6 @@ class FaceExtractor:
                 f'Model weights for face extractor is not found at {self.model_weights_path}.'
             )
         self.model = cv2.dnn.readNetFromCaffe(self.model_arch_path, self.model_weights_path)
-
 
     def extract_faces(self, img: np.ndarray) -> np.ndarray:
         """
@@ -44,16 +65,11 @@ class FaceExtractor:
         self.model.setInput(blob)
         detections = self.model.forward()
 
-        # if detections.shape[2] == 0:
-        #     raise ValueError("No detections found. The model did not detect any faces.")
-
         return self._process_detections(detections, img, w, h)
-
-
 
     def _prepare_blob(self, img: np.ndarray) -> np.ndarray:
         """
-        Prepare the image for the model by resizing and normalizing it.
+        Prepares the input image for the model by resizing and normalizing it.
 
         :param img: The input image to be processed.
         :type img: numpy.ndarray
@@ -63,14 +79,13 @@ class FaceExtractor:
         """
         if img is None or img.size == 0:
             raise ValueError("Invalid image input. Image cannot be None or empty.")
-        
+
         resized_img = cv2.resize(img, (300, 300))
         return cv2.dnn.blobFromImage(resized_img, 1.0, (300, 300), (104.0, 177.0, 123.0))
 
-
     def _process_detections(self, detections: np.ndarray, img: np.ndarray, w: int, h: int) -> np.ndarray:
         """
-        Process the model's detections and return the detected face or the original image.
+        Processes the model's detections and returns the detected face or the original image.
 
         :param detections: The output of the forward pass containing the detection results.
         :type detections: numpy.ndarray
@@ -96,6 +111,7 @@ class FaceExtractor:
 
 
 if __name__ == '__main__':
+    # Example usage
     image = cv2.imread(r'app\test_images\porn_189.jpg')
     face_extractor_obj = FaceExtractor('')
     face = face_extractor_obj.extract_faces(image)
