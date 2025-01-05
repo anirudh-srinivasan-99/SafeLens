@@ -174,4 +174,7 @@ cython_debug/
 *.prototxt
 *.caffemodel
 *.h5
+
+# ignore test images
 *.png
+*.jpg
