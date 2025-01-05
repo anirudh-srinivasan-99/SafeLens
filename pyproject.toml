@@ -8,6 +8,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "3.8.10"
 flask = "3.0.0"
+configparser = "^7.1.0"
+keras = "2.13.1"
+opencv-python = "4.8.1.78"
 
 
 [build-system]
