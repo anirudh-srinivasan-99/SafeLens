@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# ignore models files
+*.prototxt
+*.caffemodel
+*.h5
